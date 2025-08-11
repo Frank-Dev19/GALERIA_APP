@@ -10,15 +10,41 @@ export default function LoginPage() {
     const [showPassword, setShowPassword] = useState(false)
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
+    const [error, setError] = useState("")
+
+    const handleLogin = async (e: React.FormEvent) => {
+        e.preventDefault()
+        setError("")
+
+        try {
+            const res = await fetch("http://localhost:4000/auth/login", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    username: email, // tu backend espera 'username'
+                    password
+                }),
+            })
+
+            if (!res.ok) {
+                throw new Error("Usuario o contraseña incorrectos")
+            }
+
+            const data = await res.json()
+            localStorage.setItem("token", data.access_token)
+
+            router.push("/dashboard")
+        } catch (err: any) {
+            setError(err.message)
+        }
+    }
 
     return (
         <div className="min-h-screen bg-gradient-to-br from-purple-200 via-pink-200 to-amber-200 flex items-center justify-center p-4 relative overflow-hidden">
-            {/* Rapunzel Tower Background */}
             <div className="absolute inset-0 opacity-100">
                 <img src="/images/fondo.jpg" alt="Torre de Rapunzel" className="w-full h-full object-cover" />
             </div>
 
-            {/* Floating Lanterns */}
             <div className="absolute inset-0 overflow-hidden pointer-events-none">
                 <div className="absolute top-20 left-20 w-8 h-8 bg-amber-300/40 rounded-full blur-sm animate-float"></div>
                 <div className="absolute top-40 right-32 w-6 h-6 bg-yellow-300/40 rounded-full blur-sm animate-pulse"></div>
@@ -37,7 +63,6 @@ export default function LoginPage() {
             </div>
 
             <div className="relative w-full max-w-md z-10">
-                {/* Back Button */}
                 <Link
                     href="/"
                     className="absolute -top-8 left-0 flex items-center space-x-2 text-white hover:text-pink-600 transition-colors"
@@ -46,9 +71,7 @@ export default function LoginPage() {
                     <span className="text-sm font-medium ">Volver al reino</span>
                 </Link>
 
-                {/* Login Card */}
                 <div className="bg-/95 backdrop-blur-lg rounded-3xl shadow-2xl border-2 border-purple-200 p-8 relative overflow-hidden">
-                    {/* Magical Sparkles */}
                     <div className="absolute inset-0 pointer-events-none">
                         <div className="absolute top-4 right-4 w-2 h-2 bg-amber-400 rounded-full animate-pulse opacity-60"></div>
                         <div
@@ -61,7 +84,6 @@ export default function LoginPage() {
                         ></div>
                     </div>
 
-                    {/* Decorative Header */}
                     <div className="text-center mb-8">
                         <div className="relative inline-block mb-4">
                             <div className="w-20 h-20 bg-gradient-to-r from-purple-300 to-pink-400 rounded-full flex items-center justify-center relative">
@@ -79,22 +101,19 @@ export default function LoginPage() {
                         <h1 className="text-3xl font-bold bg-gradient-to-r from-purple-600 via-pink-600 to-amber-600 bg-clip-text text-transparent mb-2">
                             Torre Secreta
                         </h1>
-                        <p className="text-white text-sm font-medium">Solo para la princesa Rapunzel 👑</p>
+                        <p className="text-white text-lg font-medium">Solo para la princesa Pamela 👑</p>
                     </div>
 
-                    {/* Login Form */}
-                    <form
-                        className="space-y-6"
-                        onSubmit={(e) => {
-                            e.preventDefault()
-                            router.push("/dashboard")
-                        }}
-                    >
+                    <form className="space-y-6" onSubmit={handleLogin}>
+                        {error && (
+                            <p className="text-red-500 text-sm text-center">{error}</p>
+                        )}
+
                         <div className="space-y-2">
                             <label className="text-sm font-bold text-white block">Email Real</label>
                             <div className="relative">
                                 <input
-                                    type="email"
+                                    type="text"
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
                                     className="w-full px-4 py-3 bg-purple-50/80 border-2 border-purple-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-all duration-300 placeholder-purple-400"
@@ -142,7 +161,6 @@ export default function LoginPage() {
                         </button>
                     </form>
 
-                    {/* Decorative Bottom */}
                     <div className="mt-8 pt-6 border-t border-purple-200 text-center">
                         <div className="flex justify-center mb-2">
                             <img src="/images/rapunzel-flowers.jpg" alt="Flores mágicas" className="w-8 h-8 rounded-full" />

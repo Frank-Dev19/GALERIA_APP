@@ -8,11 +8,11 @@ import { ArrowLeft, Heart, Download, Share2, X } from "lucide-react"
 const albumPhotos = {
     personales: [
         { id: 1, src: "/images/lentes.jpg?height=400&width=300", alt: "Retrato natural" },
-        { id: 2, src: "/placeholder.svg?height=400&width=300", alt: "Momento de lectura" },
-        { id: 3, src: "/placeholder.svg?height=400&width=300", alt: "Con flores de primavera" },
-        { id: 4, src: "/placeholder.svg?height=400&width=300", alt: "Atardecer dorado" },
-        { id: 5, src: "/placeholder.svg?height=400&width=300", alt: "Café matutino" },
-        { id: 6, src: "/placeholder.svg?height=400&width=300", alt: "Reflejo artístico" },
+        { id: 2, src: "/images/lentes.jpg?height=400&width=300", alt: "Momento de lectura" },
+        { id: 3, src: "/images/lentes.jpg?height=400&width=300", alt: "Con flores de primavera" },
+        { id: 4, src: "/images/lentes.jpg?height=400&width=300", alt: "Atardecer dorado" },
+        { id: 5, src: "/images/lentes.jpg?height=400&width=300", alt: "Café matutino" },
+        { id: 6, src: "/images/lentes.jpg?height=400&width=300", alt: "Reflejo artístico" },
     ],
     pareja: [
         { id: 7, src: "/placeholder.svg?height=400&width=300", alt: "Atardecer en la playa" },
