@@ -4,6 +4,7 @@ import { useState } from "react"
 import Link from "next/link"
 import { Crown, Eye, EyeOff, Sparkles, ArrowLeft } from "lucide-react"
 import { useRouter } from "next/navigation"
+import { authService } from "@/services/auth.service"
 
 export default function LoginPage() {
     const router = useRouter()
@@ -17,25 +18,14 @@ export default function LoginPage() {
         setError("")
 
         try {
-            const res = await fetch("http://localhost:4000/auth/login", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    username: email, // tu backend espera 'username'
-                    password
-                }),
-            })
+            const data = await authService.login(email, password)
 
-            if (!res.ok) {
-                throw new Error("Usuario o contraseña incorrectos")
-            }
-
-            const data = await res.json()
+            // Guardar token
             localStorage.setItem("token", data.access_token)
 
             router.push("/dashboard")
         } catch (err: any) {
-            setError(err.message)
+            setError(err.message || "Error en el inicio de sesión")
         }
     }
 
