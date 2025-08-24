@@ -15,7 +15,8 @@ export const API_CONFIG = {
     photos: {
         root: "/photos",
         byId: (id: string | number) => `/photos/${id}`,
-        byAlbum: (albumId: string | number) => `/albums/${albumId}`,
+        byAlbum: (albumId: string | number) => `/photos/album/${albumId}`,
+
         upload: "/photos/upload",
     },
 };

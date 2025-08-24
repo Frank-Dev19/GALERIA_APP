@@ -2,11 +2,11 @@ import { API_CONFIG } from "@/config/apiConfig";
 import { apiRequest } from "@/lib/api";
 
 export const photosService = {
-    getByAlbum(albumId: number) {
+    getPhotosByAlbum(albumId: number) {
         return apiRequest(API_CONFIG.photos.byAlbum(albumId), {}, true);
     },
 
-    upload(albumId: number, file: File) {
+    uploadPhotos(albumId: number, file: File) {
         const formData = new FormData();
         formData.append("file", file);
         formData.append("albumId", albumId.toString());
@@ -17,9 +17,19 @@ export const photosService = {
         }, true);
     },
 
-    delete(id: number) {
+    deletePhotos(id: number) {
         return apiRequest(API_CONFIG.photos.byId(id), {
             method: "DELETE"
+        }, true);
+    },
+
+    updatePhoto(photoId: number, data: Partial<{ alt: string; isPublic: boolean }>) {
+        return apiRequest(API_CONFIG.photos.byId(photoId), {
+            method: "PATCH",
+            body: JSON.stringify(data),
+            headers: {
+                "Content-Type": "application/json",
+            }
         }, true);
     }
 };
